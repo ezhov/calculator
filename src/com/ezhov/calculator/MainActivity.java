@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				newValue = true;
 				calcModel.pushValue(Long.valueOf(getValue()));
-				calcModel.pushOperation(Operation.kOperationMult);
+				calcModel.pushOperation('*');
 			}
 		});
 		
@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				newValue = true;
 				calcModel.pushValue(Long.valueOf(getValue()));
-				calcModel.pushOperation(Operation.kOperationDiv);
+				calcModel.pushOperation('/');
 			}
 		});
 		
@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				newValue = true;
 				calcModel.pushValue(Long.valueOf(getValue()));
-				calcModel.pushOperation(Operation.kOperationAdd);
+				calcModel.pushOperation('+');
 			}
 		});
 		
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				newValue = true;
 				calcModel.pushValue(Long.valueOf(getValue()));
-				calcModel.pushOperation(Operation.kOperationSub);
+				calcModel.pushOperation('-');
 			}
 		});
 		
