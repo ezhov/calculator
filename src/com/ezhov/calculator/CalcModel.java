@@ -101,37 +101,6 @@ public class CalcModel {
 	}
 	public Long calculate ()
 	{
-		/*
-		Long rValue = values.removeFirst();
-		while (!operations.isEmpty())
-		{
-			Operation op = operations.removeFirst();
-			Long lValue = values.removeFirst();
-			switch (op) {
-			case kOperationMult:
-				rValue = Long.valueOf(rValue.longValue()*lValue.longValue());
-				break;
-				
-			case kOperationDiv:
-				rValue = Long.valueOf(rValue.longValue()/lValue.longValue());
-				break;
-
-			case kOperationAdd:
-				rValue = Long.valueOf(rValue.longValue()+lValue.longValue());
-				break;
-
-			case kOperationSub:
-				rValue = Long.valueOf(rValue.longValue()-lValue.longValue());
-				break;
-
-
-			default:
-				break;
-			}
-		}
-		return rValue;
-		*/
-		
 		ListIterator<Long> valueIterator = values.listIterator();
 		ListIterator<OperationHelper.Operation> operationIterator= operations.listIterator();
 
