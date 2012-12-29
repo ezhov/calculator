@@ -9,9 +9,9 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity {
 	
-	protected boolean newValue;
+	private boolean newValue;
 	
-	protected EditText editText;
+	private EditText editText;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +20,10 @@ public class MainActivity extends Activity {
         editText = (EditText)findViewById(R.id.editText);
         final CalcModel calcModel = new CalcModel();
         newValue = false;
-        final View.OnClickListener listener = new View.OnClickListener() {
+        final View.OnClickListener numberListener = new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				final Button button = (Button)v;
 				long val = 0;
 				if (!newValue)
@@ -34,68 +33,38 @@ public class MainActivity extends Activity {
 				newValue = false;
 			}
 		};
-		findViewById(R.id.button1).setOnClickListener(listener);
-		findViewById(R.id.button2).setOnClickListener(listener);
-		findViewById(R.id.button3).setOnClickListener(listener);
-		findViewById(R.id.button4).setOnClickListener(listener);
-		findViewById(R.id.button5).setOnClickListener(listener);
-		findViewById(R.id.button6).setOnClickListener(listener);
-		findViewById(R.id.button7).setOnClickListener(listener);
-		findViewById(R.id.button8).setOnClickListener(listener);
-		findViewById(R.id.button9).setOnClickListener(listener);
-		findViewById(R.id.button0).setOnClickListener(listener);
+		findViewById(R.id.button1).setOnClickListener(numberListener);
+		findViewById(R.id.button2).setOnClickListener(numberListener);
+		findViewById(R.id.button3).setOnClickListener(numberListener);
+		findViewById(R.id.button4).setOnClickListener(numberListener);
+		findViewById(R.id.button5).setOnClickListener(numberListener);
+		findViewById(R.id.button6).setOnClickListener(numberListener);
+		findViewById(R.id.button7).setOnClickListener(numberListener);
+		findViewById(R.id.button8).setOnClickListener(numberListener);
+		findViewById(R.id.button9).setOnClickListener(numberListener);
+		findViewById(R.id.button0).setOnClickListener(numberListener);
 		
-		findViewById(R.id.buttonMult).setOnClickListener(new View.OnClickListener() {
+		final View.OnClickListener operationListener = new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				newValue = true;
+				Button b = (Button)v;
 				calcModel.pushValue(Long.valueOf(getValue()));
-				calcModel.pushOperation('*');
+				calcModel.pushOperation(b.getText().toString().charAt(0));
 			}
-		});
+		};
 		
-		findViewById(R.id.buttonDiv).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				newValue = true;
-				calcModel.pushValue(Long.valueOf(getValue()));
-				calcModel.pushOperation('/');
-			}
-		});
-		
-		findViewById(R.id.buttonAdd).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				newValue = true;
-				calcModel.pushValue(Long.valueOf(getValue()));
-				calcModel.pushOperation('+');
-			}
-		});
-		
-		findViewById(R.id.buttonSub).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				newValue = true;
-				calcModel.pushValue(Long.valueOf(getValue()));
-				calcModel.pushOperation('-');
-			}
-		});
-		
+		findViewById(R.id.buttonMult).setOnClickListener(operationListener);
+		findViewById(R.id.buttonDiv).setOnClickListener(operationListener);
+		findViewById(R.id.buttonAdd).setOnClickListener(operationListener);
+		findViewById(R.id.buttonSub).setOnClickListener(operationListener);
 		
 		
 		findViewById(R.id.buttonCalc).setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				newValue = true;
 				calcModel.pushValue(getValue());
 				setValue(calcModel.calculate());
@@ -106,7 +75,6 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				long val = getValue();
 				val = val / 10;
 				setValue(val);
@@ -119,18 +87,16 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				setValue(0);
 				calcModel.reset();
-				// TODO Auto-generated method stub
-				
 			}
 		});
     }
     
-    protected long getValue()
+    private long getValue()
     {
     	return Long.parseLong(editText.getText().toString());
     }
     
-    protected void setValue(long value)
+    private void setValue(long value)
     {
     	editText.setText(Long.toString(value));
     }
