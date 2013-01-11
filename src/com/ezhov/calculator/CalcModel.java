@@ -3,9 +3,15 @@ package com.ezhov.calculator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
-public class CalcModel {
+
+public class CalcModel implements Parcelable{
 	
+	private static final String CALC_MODEL_TAG = "CalcModel";
+
 	private static class OperationHelper {
 
 		enum Operation {
@@ -141,5 +147,40 @@ public class CalcModel {
 		operations.clear();
 		values.clear();
 	}
+
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		Log.v(CALC_MODEL_TAG, "describeContents");
+		return 0;
+	}
+
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		Log.v(CALC_MODEL_TAG, "writeToParcel");
+	}
 	
+	public static final Parcelable.Creator<CalcModel> CREATOR = new Parcelable.Creator<CalcModel>() {
+
+		@Override
+		public CalcModel createFromParcel(Parcel source) {
+			// TODO Auto-generated method stub
+			Log.v(CALC_MODEL_TAG, "createFromParcel");
+			
+			CalcModel result = new CalcModel();
+			
+			return result;
+		}
+
+		@Override
+		public CalcModel[] newArray(int size) {
+			// TODO Auto-generated method stub
+			Log.v(CALC_MODEL_TAG, "newArray");
+			return null;
+		}
+	};
+
+
 }

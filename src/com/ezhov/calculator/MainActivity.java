@@ -2,6 +2,7 @@ package com.ezhov.calculator;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -9,16 +10,28 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity {
 	
+	public static final String MAIN_ACTIVITY_TAG = "MainActivity";
+
 	private boolean newValue;
 	
 	private EditText editText;
 	
+	private CalcModel calcModel;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v(MAIN_ACTIVITY_TAG, "onCreate");
+        
+        calcModel = new CalcModel();
+        if (savedInstanceState != null)
+        {
+        	calcModel = savedInstanceState.getParcelable("calcmodel");
+        	Log.v(MAIN_ACTIVITY_TAG, "loading from bundle");
+        }
+        
         setContentView(R.layout.activity_main);
         editText = (EditText)findViewById(R.id.editText);
-        final CalcModel calcModel = new CalcModel();
         newValue = false;
         final View.OnClickListener numberListener = new View.OnClickListener() {
 			
@@ -108,4 +121,19 @@ public class MainActivity extends Activity {
         return true;
     }
     
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	// TODO Auto-generated method stub
+    	super.onSaveInstanceState(outState);
+    	outState.putParcelable("calcmodel", calcModel);
+    	Log.v(MAIN_ACTIVITY_TAG, "onSaveInstanceState");
+    }
+    
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    	// TODO Auto-generated method stub
+    	super.onRestoreInstanceState(savedInstanceState);
+    	calcModel = savedInstanceState.getParcelable("calcmodel");
+    	Log.v(MAIN_ACTIVITY_TAG, "onRestoreInstanceState");
+    }
 }
