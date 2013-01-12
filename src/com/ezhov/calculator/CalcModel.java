@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class CalcModel implements Parcelable{
 	
-	private static final String CALC_MODEL_TAG = "CalcModel";
+	private static final String CALC_MODEL_LOG_TAG = "CalcModel";
 
 	private static class OperationHelper {
 
@@ -138,8 +138,11 @@ public class CalcModel implements Parcelable{
 		assert(values.size() == 1);
 		assert(operations.size() == 0);
 		
-		return values.get(0);
+		Long result = values.get(0);
 		
+		reset();
+		
+		return result;
 	}
 
 
@@ -151,23 +154,21 @@ public class CalcModel implements Parcelable{
 
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
-		Log.v(CALC_MODEL_TAG, "describeContents");
+		Log.v(CALC_MODEL_LOG_TAG, "describeContents");
 		return 0;
 	}
 
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		Log.v(CALC_MODEL_TAG, "writeToParcel");
+		Log.v(CALC_MODEL_LOG_TAG, "writeToParcel");
 	}
 	
 	public static final Parcelable.Creator<CalcModel> CREATOR = new Parcelable.Creator<CalcModel>() {
 
 		@Override
 		public CalcModel createFromParcel(Parcel source) {
-			// TODO Auto-generated method stub
-			Log.v(CALC_MODEL_TAG, "createFromParcel");
+			Log.v(CALC_MODEL_LOG_TAG, "createFromParcel");
 			
 			CalcModel result = new CalcModel();
 			
@@ -176,8 +177,7 @@ public class CalcModel implements Parcelable{
 
 		@Override
 		public CalcModel[] newArray(int size) {
-			// TODO Auto-generated method stub
-			Log.v(CALC_MODEL_TAG, "newArray");
+			Log.v(CALC_MODEL_LOG_TAG, "newArray");
 			return null;
 		}
 	};

@@ -10,9 +10,13 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity {
 	
-	public static final String MAIN_ACTIVITY_TAG = "MainActivity";
+	private static final String CALC_MODEL_KEY = "calcmodel";
 
-	private boolean newValue;
+	private static final String NEW_VALUE_KEY = "newvalue";
+
+	public static final String MAIN_ACTIVITY_LOG_TAG = "MainActivity";
+
+	private boolean isNewValue;
 	
 	private EditText editText;
 	
@@ -21,29 +25,31 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(MAIN_ACTIVITY_TAG, "onCreate");
-        
+        Log.v(MAIN_ACTIVITY_LOG_TAG, "onCreate");
+
+        isNewValue = false;
+
         calcModel = new CalcModel();
         if (savedInstanceState != null)
         {
-        	calcModel = savedInstanceState.getParcelable("calcmodel");
-        	Log.v(MAIN_ACTIVITY_TAG, "loading from bundle");
+        	calcModel = savedInstanceState.getParcelable(CALC_MODEL_KEY);
+        	isNewValue = savedInstanceState.getBoolean(NEW_VALUE_KEY);
+        	Log.v(MAIN_ACTIVITY_LOG_TAG, "loading from bundle");
         }
         
         setContentView(R.layout.activity_main);
         editText = (EditText)findViewById(R.id.editText);
-        newValue = false;
         final View.OnClickListener numberListener = new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				final Button button = (Button)v;
 				long val = 0;
-				if (!newValue)
+				if (!isNewValue)
 					val = getValue();
 				val = val*10+Long.parseLong(button.getText().toString());
 				setValue(val);
-				newValue = false;
+				isNewValue = false;
 			}
 		};
 		findViewById(R.id.button1).setOnClickListener(numberListener);
@@ -61,7 +67,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				newValue = true;
+				isNewValue = true;
 				Button b = (Button)v;
 				calcModel.pushValue(Long.valueOf(getValue()));
 				calcModel.pushOperation(b.getText().toString().charAt(0));
@@ -78,7 +84,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				newValue = true;
+				isNewValue = true;
 				calcModel.pushValue(getValue());
 				setValue(calcModel.calculate());
 			}
@@ -123,17 +129,17 @@ public class MainActivity extends Activity {
     
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-    	// TODO Auto-generated method stub
     	super.onSaveInstanceState(outState);
-    	outState.putParcelable("calcmodel", calcModel);
-    	Log.v(MAIN_ACTIVITY_TAG, "onSaveInstanceState");
+    	outState.putParcelable(CALC_MODEL_KEY, calcModel);
+    	outState.putBoolean(NEW_VALUE_KEY, isNewValue);
+    	Log.v(MAIN_ACTIVITY_LOG_TAG, "onSaveInstanceState");
     }
     
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-    	// TODO Auto-generated method stub
     	super.onRestoreInstanceState(savedInstanceState);
-    	calcModel = savedInstanceState.getParcelable("calcmodel");
-    	Log.v(MAIN_ACTIVITY_TAG, "onRestoreInstanceState");
+    	calcModel = savedInstanceState.getParcelable(CALC_MODEL_KEY);
+    	isNewValue = savedInstanceState.getBoolean(NEW_VALUE_KEY);
+    	Log.v(MAIN_ACTIVITY_LOG_TAG, "onRestoreInstanceState");
     }
 }
